@@ -1,0 +1,321 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+> Not: Kurallar dosyasında görsel yolları Next.js’in `/public` dizinine göre verilmiştir (örn. `src="/images/hero/phones.png"`). İçerik Türkçe ve “kuaför” odaklıdır.
+
+---
+
+```md
+# name: BiMakas Landing – Next.js App Router Rules
+# description: BiMakas mobil uygulamasını tanıtan, iş modelini anlatan, partner (kuaför) ve müşteri CTA’larını içeren, Türkçe landing page üretim kuralları.
+# globs: ["**/*"]
+# excludes: ["node_modules/**", ".next/**", "out/**", "build/**"]
+
+## 👇 AMAÇ
+- BiMakas için performanslı, SEO-dostu, **Next.js App Router + TypeScript + Tailwind CSS** ile tek sayfalık (gerektiğinde ek yasal sayfalarla) **mobil uygulama landing page** oluştur.
+- Dilde **Türkçe** kullan. Hedef kitle:
+  - **Müşteriler:** Konumuna mobil kuaför hizmeti çağırmak isteyenler.
+  - **Partnerler (Kuaförler):** Serbest ve esnek çalışma ile gelirini **arttırmak** isteyen profesyoneller.
+- Görseller `/public/images/**` altında; `next/image` ile kullan.
+- Metin ve bileşenleri **aşağıdaki içerik ve yapıya** göre üret.
+
+---
+
+## 🧱 TEKNOLOJİ YIĞINI & PROJE YAPISI
+- **Next.js 14+ / 15**, **App Router** ( `/app` dizini )
+- **TypeScript** (strict)
+- **Tailwind CSS**
+- **ESLint + Prettier**
+- **next/font** ile Google Fonts (Inter + optional display font)
+
+**Dosya ağacı (hedef)**
+```
+
+/app
+/api/subscribe/route.ts            # (opsiyonel) waitlist formu stub
+/legal/kvkk/page.tsx               # KVKK & Gizlilik
+/legal/terms/page.tsx              # Kullanım Şartları
+/contact/page.tsx                  # İletişim (opsiyonel)
+/sitemap.ts                        # SEO
+/robots.txt                        # SEO
+/opengraph-image.tsx               # OG image
+/icon.png                          # Favicon
+/manifest.json                     # PWA manifest (opsiyonel)
+/page.tsx                          # Ana landing page
+/components
+Button.tsx
+Container.tsx
+Header.tsx
+Footer.tsx
+Hero.tsx
+AppScreens.tsx
+ValueProps.tsx
+HowItWorks.tsx
+PartnerCTA.tsx
+SocialProof.tsx
+Pricing.tsx                        # (opsiyonel, şimdilik gizli)
+FAQ.tsx
+DownloadBadges.tsx
+ContactForm.tsx                    # (opsiyonel)
+/lib
+analytics.ts                       # (opsiyonel placeholder)
+/styles
+globals.css
+/public
+/images
+/brand/logo-light.svg
+/brand/logo-dark.svg
+/hero/phones.png
+/screens/home.png
+/screens/booking.png
+/screens/checkout.png
+/screens/tracking.png
+/partners/pro-hero.png
+/badges/appstore.svg
+/badges/googleplay.svg
+/illustrations/clock.png
+/illustrations/location.png
+/illustrations/shield.png
+
+````
+
+---
+
+## 🎨 TASARIM SİSTEMİ
+- Renk Paleti:
+  - `--primary: #FF6B6B` (BiMakas ana)
+  - `--primary-foreground: #FFFFFF`
+  - `--bg: #0B0B0E` (koyu arka plan) ve açık tema desteği için `#FFFFFF`
+  - Griler: `#0F1115`, `#1A1C20`, `#2A2D34`, metin için daha açık gri
+- Tipografi:
+  - Başlıklar: Inter SemiBold/Bold
+  - Metin: Inter Regular
+- Stil:
+  - Modern, temiz, mobil öncelikli.
+  - Kartlar: yumuşak gölge, `rounded-2xl`, yeterli iç boşluk.
+  - Butonlar: doldurma (primary) ve outline varyantları.
+- İkonlar: **lucide-react** veya SVG inline (basit kullanım).
+- Görseller: `next/image` ile responsive, `sizes` tanımlı.
+
+---
+
+## 🧭 NAVBAR (Header)
+- Sol: BiMakas logo (`/images/brand/logo-light.svg`)
+- Sağ: “Özellikler”, “Nasıl Çalışır?”, “Kuaförler”, “SSS”, “İndir” anchor linkleri.
+- Sağ üstte birincil CTA: “Erken Erişim” (waitlist formuna kaydır veya modal).
+
+---
+
+## 🦸 HERO (Katman 1)
+**Amaç:** Ürünü net anlat, güçlü değer önerisi + çift CTA (Müşteri ve Kuaför).
+
+- Başlık (TR, kısa ve net):
+  - “Kuaför, dakikalar içinde kapında.”
+- Alt başlık (destekleyici):
+  - “BiMakas, konumuna en uygun **profesyonel kuaförü** getirir. Uygulamadan seç, anında randevu al, bekleme yok.”
+- CTA butonları:
+  - Primary: “Erken Erişim Listesine Katıl”
+  - Secondary (outline): “Kuaförüm ve Gelirimi Arttırmak İstiyorum”
+- Mağaza rozetleri (placeholder):
+  - `/images/badges/appstore.svg`, `/images/badges/googleplay.svg`
+- Görsel:
+  - Telefon maketleri: `/images/hero/phones.png`
+
+---
+
+## 💎 DEĞER ÖNERİLERİ (ValueProps)
+- 3–6 kartlık grid, kısa başlık + tek cümle:
+  1) **Dakikalar İçinde Hizmet**  
+     “Yakınındaki profesyonellerden anında randevu.”
+  2) **Güvenli Ödeme**  
+     “İş tamamlanınca ödemeni güvenle tamamla.”
+  3) **Şeffaf Fiyatlandırma**  
+     “Hizmetler ve ücretler siparişten önce net.”
+  4) **Doğrulanmış Profesyoneller**  
+     “Belge ve puan doğrulamasıyla için rahat.”
+  5) **Konumuna Gelen Kuaför**  
+     “Evde, ofiste veya otelde, nerede istersen.”
+  6) **Takip & Bildirim**  
+     “Randevunu gerçek zamanlı takip et.”
+
+Her kartta küçük bir görsel:
+- `/images/illustrations/clock.png`
+- `/images/illustrations/location.png`
+- `/images/illustrations/shield.png` (vb.)
+
+---
+
+## 📱 UYGULAMA EKRANLARI (AppScreens)
+- 3–4 ekran görseli, açıklama metinleriyle:
+  - `/images/screens/home.png` — “Yakındaki kuaförleri keşfet”
+  - `/images/screens/booking.png` — “Hizmeti seç, saatini belirle”
+  - `/images/screens/checkout.png` — “Güvenli ödeme”
+  - `/images/screens/tracking.png` — “Geliyor! Canlı takip”
+
+---
+
+## 🛠️ NASIL ÇALIŞIR? (HowItWorks)
+- Adım 1: “Konumunu paylaş ve ihtiyacını seç”
+- Adım 2: “Uygun kuaförleri karşılaştır”
+- Adım 3: “Randevunu onayla, güvenle öde”
+- Adım 4: “Profesyonel kapında, keyfini çıkar”
+
+Her adım kısa, tek cümle. Basit ikon veya küçük görsel.
+
+---
+
+## 💼 PARTNER CTA – KUAFÖRLER (PartnerCTA)
+- Başlık: “BiMakas’la Gelirini Arttır”
+- Alt: “Esnek saatler, kendi servis yarıçapın, anında ödeme akışı.”
+- Madde işaretleri:
+  - “Yeni müşteri edinimi: Uygulama sana talep getirir”
+  - “Akıllı randevu kutusu: kabul/ret, takvim yönetimi”
+  - “Güvenli ödemeler: Tamamlanan işten sonra cüzdana yansır”
+- Buton: “Partner Başvurusu”
+- Görsel: `/images/partners/pro-hero.png`
+
+> Yazım tercihi: **arttır** biçimini kullan.
+
+---
+
+## 🗣️ SOSYAL KANIT (SocialProof)
+- Kısa referanslar (placeholder)
+- Ortalama puan göstergesi (yıldızlar, örn. 4.9/5)
+
+---
+
+## ❓ SIKÇA SORULAN SORULAR (FAQ)
+Örnek maddeler:
+1. **Hangi şehirlerde hizmet veriyorsunuz?**  
+   Pilot bölgelerde başlıyoruz; uygulama içinden kapsama alanını görebilirsin.
+2. **Ücretler nasıl belirleniyor?**  
+   Hizmete ve mesafeye göre, siparişten önce net şekilde görünür.
+3. **Ödemeler güvenli mi?**  
+   Ödemeler şifreli altyapı ve güvenli sağlayıcılarla alınır.
+4. **Randevuyu iptal edebilir miyim?**  
+   İptal koşulları randevu saatine kalan süreye göre değişir.
+5. **Kuaförler nasıl doğrulanıyor?**  
+   Belge kontrolü, profil incelemesi ve müşteri puanlarıyla.
+
+---
+
+## ⬇️ İNDİRME & ERKEN ERİŞİM (DownloadBadges + Waitlist)
+- Mağaza rozetleri + e-posta waitlist formu.
+- Waitlist API stub: `/app/api/subscribe/route.ts` (POST: `{ email }` -> 200/400).
+
+---
+
+## 🦶 FOOTER
+- Logo, kısa tanım:
+  “BiMakas, konumuna profesyonel kuaför hizmetini getirir.”
+- Linkler: Özellikler • Nasıl Çalışır? • Kuaförler • SSS • KVKK • Şartlar • İletişim
+- Telif ve şirket bilgisi (placeholder).
+
+---
+
+## 🧩 BİLEŞEN SÖZLEŞMELERİ (ÖNEMLİ)
+- Her bileşen **tsx** ve **export default** ile dışa aktarılır.
+- Props sade; metinler mümkün olduğunca **içeriden** gelsin (kurallardaki metni kullan).
+- Görseller:
+  ```tsx
+  import Image from "next/image";
+  <Image src="/images/hero/phones.png" alt="BiMakas uygulama" width={1200} height={1200} priority />
+````
+
+* Bağlantılar: `next/link`
+* Bölümlere `id` ver: `id="ozellikler" | "nasil-calisir" | "kuaforler" | "sss" | "indir"`
+
+---
+
+## 🧠 KOD STANDARTLARI
+
+* TypeScript `strict: true`
+* Fonksiyonel bileşen, okunaklı className, Tailwind ile spacing (ör. `py-16 md:py-24`).
+* Responsive: `max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8`
+* **A11y:** Alt metinler dolu, butonlar erişilebilir, kontrast yeterli.
+* **SEO:** `export const metadata = { title, description, openGraph, twitter }`
+* OG: `/opengraph-image.tsx` ile başlık + alt başlık.
+
+---
+
+## 🧪 TEST/DOĞRULAMA (Acceptance Checklist)
+
+* [ ] Lighthouse Perf > 90, A11y > 90
+* [ ] Mobil-first, CLS düşük, görseller `sizes` ile
+* [ ] Başlık + alt başlık TR, “kuaför” vurgusu net
+* [ ] Partner CTA ayrı ve güçlü
+* [ ] SSS mevcut, yasal sayfalar linkli
+* [ ] Waitlist formu çalışır (stub da olsa)
+* [ ] 404 atmaz; linkler kaydırır
+* [ ] `robots.txt`, `sitemap.ts` var
+
+---
+
+## ✍️ HAZIR METİNLER (KULLAN)
+
+### Hero
+
+* **Başlık:** Kuaför, dakikalar içinde kapında.
+* **Alt:** BiMakas, konumuna en uygun **profesyonel kuaförü** getirir. Uygulamadan seç, anında randevu al, bekleme yok.
+* **CTA-1:** Erken Erişim Listesine Katıl
+* **CTA-2:** Kuaförüm ve Gelirimi Arttırmak İstiyorum
+
+### Kısa Açıklama (Header altında)
+
+* “BiMakas, bulunduğun yerde kaliteli kuaför hizmetini hızlı, şeffaf ve güvenli şekilde sunar.”
+
+### Değer Önerileri (kart metinleri yukarıdaki ValueProps bölümündeki gibi)
+
+### Nasıl Çalışır? (4 adım metinleri yukarıdaki gibi)
+
+### Partner CTA (Kuaförler)
+
+* **Başlık:** BiMakas’la Gelirini Arttır
+* **Alt:** Esnek saatler, kendi servis yarıçapın, anında ödeme akışı.
+* **Maddeler:** (yukarıdaki PartnerCTA bölümündeki üç madde)
+
+### SSS (yukarıdaki sorular)
+
+### Footer kısa tanım
+
+* “BiMakas, konumuna profesyonel kuaför hizmetini getirir.”
+
+---
+
+## 🗂️ GÖRSEL YOLLARI (KULLANIMA HAZIR)
+
+* Logo (açık/koyu): `/images/brand/logo-light.svg`, `/images/brand/logo-dark.svg`
+* Hero telefonları: `/images/hero/phones.png`
+* Ekranlar: `/images/screens/home.png`, `/images/screens/booking.png`, `/images/screens/checkout.png`, `/images/screens/tracking.png`
+* Partner görseli: `/images/partners/pro-hero.png`
+* Rozetler: `/images/badges/appstore.svg`, `/images/badges/googleplay.svg`
+* İllüstrasyonlar: `/images/illustrations/clock.png`, `/images/illustrations/location.png`, `/images/illustrations/shield.png`
+
+---
+
+## 🔧 UYGULAMA NOTLARI (Cursor için direktifler)
+
+* **page.tsx**: Bölümleri sırasıyla import et ve bir sayfada topla.
+* **Header.tsx**: Anchor link’ler bu sırayla: Özellikler, Nasıl Çalışır?, Kuaförler, SSS, İndir; sağda CTA.
+* **Hero.tsx**: Başlık/alt başlık/CTA/metinleri bu kuralla birebir kullan.
+* **ValueProps.tsx**: 3 veya 6 kartlık responsive grid; ikon/görsel küçük.
+* **AppScreens.tsx**: 3–4 ekran, `Image` ile.
+* **HowItWorks.tsx**: 4 adım, numaralı veya ikonlu.
+* **PartnerCTA.tsx**: Ayrı koyu arka planlı bölüm.
+* **FAQ.tsx**: Açılır/kapanır akordeon veya basit liste.
+* **Footer.tsx**: Linkler ve telif.
+* **/api/subscribe/route.ts**: Gelen `email` için basic regex kontrolü, 200/400 döndür (placeholder).
+* **SEO**: `metadata` ve `opengraph-image.tsx` oluştur; başlık “BiMakas – Kuaför, dakikalar içinde kapında.”
+
+---
+
+## 🧭 YASAL SAYFALAR (kısa placeholder)
+
+* **/legal/kvkk**: KVKK & Gizlilik bildirimi için placeholder metin.
+* **/legal/terms**: Kullanım Şartları placeholder.
+
+---
+

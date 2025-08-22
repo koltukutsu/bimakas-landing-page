@@ -1,0 +1,7 @@
+<!-- This is a placeholder for the phones image -->
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="600" fill="#F8F9FA"/>
+  <rect x="200" y="100" width="200" height="400" rx="30" fill="white" stroke="#E8E6E4" stroke-width="2"/>
+  <rect x="210" y="120" width="180" height="320" rx="10" fill="#FF6B6B" opacity="0.1"/>
+  <text x="300" y="300" text-anchor="middle" fill="#2E2E2E" font-family="Arial, sans-serif" font-size="14">BiMakas App</text>
+</svg>
