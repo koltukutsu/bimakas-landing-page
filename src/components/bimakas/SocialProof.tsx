@@ -1,114 +1,275 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york-v4/ui/avatar';
+import { Button } from '@/registry/new-york-v4/ui/button';
 import { Card, CardContent } from '@/registry/new-york-v4/ui/card';
 
-import { Award, Star, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 
+/**
+ * SocialProof Component - Testimonials Section ("Yorumlar")
+ *
+ * Social proof through customer testimonials and ratings.
+ * Implements luxury fashion brand aesthetic with trust-building elements.
+ *
+ * Content:
+ * - "Evimde saç kesimi yaptırmak bu kadar kolay olmamıştı." – Ahmet
+ * - "Kuaförüm ayağıma geldi, dakikalar içinde hazırdım." – Elif
+ *
+ * Design Wow Effect:
+ * - Minimal testimonial cards with round user avatars
+ * - Star ratings in coral → positivity and approachability
+ * - Luxury fashion brand "review" section feel (trust + elegance)
+ *
+ * Responsive Behavior:
+ * - Desktop: Carousel slider (3 cards visible)
+ * - Mobile: One card per view, swipeable slider for smooth UX
+ */
 const SocialProof = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
     const testimonials = [
         {
-            name: 'Ayşe K.',
-            location: 'İstanbul',
-            text: 'Evde kuaför hizmeti alabilmek çok pratik. Hem zaman kazanıyor hem de kaliteli hizmet alıyorum.',
-            rating: 5
+            id: 1,
+            name: 'Ahmet Yılmaz',
+            role: 'Pazarlama Müdürü',
+            avatar: '/avatars/ahmet.jpg',
+            rating: 5,
+            text: 'Evimde saç kesimi yaptırmak bu kadar kolay olmamıştı. Profesyonel ekip, hijyenik malzemeler ve mükemmel sonuç. BiMakas hayatımı kolaylaştırdı!',
+            service: 'Saç Kesimi',
+            date: '2 gün önce'
         },
         {
-            name: 'Mehmet B.',
-            location: 'Ankara',
-            text: 'Kuaför aramakla uğraşmıyorum artık. BiMakas sayesinde güvenilir profesyonellere kolayca ulaşıyorum.',
-            rating: 5
+            id: 2,
+            name: 'Elif Demir',
+            role: 'Grafik Tasarımcı',
+            avatar: '/avatars/elif.jpg',
+            rating: 5,
+            text: 'Kuaförüm ayağıma geldi, dakikalar içinde hazırdım. Hem zaman tasarrufu hem de evimin konforunda hizmet aldım. Kesinlikle tavsiye ederim!',
+            service: 'Saç Boyama',
+            date: '1 hafta önce'
         },
         {
-            name: 'Zeynep M.',
-            location: 'İzmir',
-            text: 'Fiyatlar çok şeffaf ve kuaförler gerçekten profesyonel. Kesinlikle tavsiye ederim.',
-            rating: 5
+            id: 3,
+            name: 'Mehmet Kaya',
+            role: 'Yazılım Geliştirici',
+            avatar: '/avatars/mehmet.jpg',
+            rating: 5,
+            text: 'Berberim ofise geldi, toplantı aralarında traş oldum. İş yoğunluğu olan birisi için mükemmel çözüm. Uygulama çok pratik!',
+            service: 'Sakal Traşı',
+            date: '3 gün önce'
+        },
+        {
+            id: 4,
+            name: 'Zeynep Arslan',
+            role: 'Doktor',
+            avatar: '/avatars/zeynep.jpg',
+            rating: 5,
+            text: 'Nöbet sonrası eve gidip kuaföre gitmek yerine evde hizmet aldım. Çok profesyonel ve güvenilir. Sağlık çalışanları için büyük kolaylık.',
+            service: 'Makyaj',
+            date: '5 gün önce'
+        },
+        {
+            id: 5,
+            name: 'Can Özkan',
+            role: 'Mimar',
+            avatar: '/avatars/can.jpg',
+            rating: 5,
+            text: 'Önemli bir sunum öncesi acil saç kesimi gerekiyordu. 30 dakika içinde profesyonel geldi ve harika bir iş çıkardı. Çok memnunum!',
+            service: 'Saç Kesimi',
+            date: '1 gün önce'
         }
     ];
 
-    const stats = [
-        {
-            icon: Users,
-            value: '10K+',
-            label: 'Mutlu Müşteri',
-            color: 'text-blue-600',
-            bgColor: 'bg-blue-50'
-        },
-        {
-            icon: Award,
-            value: '500+',
-            label: 'Doğrulanmış Kuaför',
-            color: 'text-green-600',
-            bgColor: 'bg-green-50'
-        },
-        {
-            icon: Star,
-            value: '4.9',
-            label: 'Ortalama Puan',
-            color: 'text-yellow-600',
-            bgColor: 'bg-yellow-50'
-        }
-    ];
+    const nextSlide = () => {
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    };
+
+    // Auto-advance carousel
+    useEffect(() => {
+        const timer = setInterval(nextSlide, 5000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const renderStars = (rating: number) => {
+        return Array.from({ length: 5 }, (_, index) => (
+            <Star key={index} className={`h-4 w-4 ${index < rating ? 'text-primary fill-primary' : 'text-gray-300'}`} />
+        ));
+    };
 
     return (
-        <section className='py-12 sm:py-16 md:py-20 lg:py-24'>
-            <div className='container mx-auto max-w-screen-xl px-3 sm:px-4 lg:px-8'>
-                {/* Stats */}
-                <div className='mb-12 grid grid-cols-1 gap-6 sm:mb-16 sm:grid-cols-3 sm:gap-8'>
-                    {stats.map((stat, index) => {
-                        const IconComponent = stat.icon;
-
-                        return (
-                            <div key={index} className='text-center'>
-                                <div
-                                    className={`h-12 w-12 rounded-full sm:h-14 sm:w-14 md:h-16 md:w-16 ${stat.bgColor} mx-auto mb-3 flex items-center justify-center sm:mb-4`}>
-                                    <IconComponent className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${stat.color}`} />
-                                </div>
-                                <div className='text-foreground mb-1 text-2xl font-bold sm:mb-2 sm:text-3xl'>
-                                    {stat.value}
-                                </div>
-                                <div className='text-muted-foreground text-sm sm:text-base'>{stat.label}</div>
-                            </div>
-                        );
-                    })}
-                </div>
-
-                {/* Testimonials */}
-                <div className='mb-8 text-center sm:mb-12'>
-                    <h2 className='text-foreground mb-3 text-2xl font-bold sm:mb-4 sm:text-3xl md:text-4xl'>
-                        Müşterilerimiz Ne Diyor?
+        <section id='testimonials' className='bg-muted/20 py-20 lg:py-32'>
+            <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+                {/* Section Header */}
+                <div className='mb-16 text-center'>
+                    <h2 className='text-foreground mb-6 text-3xl font-bold sm:text-4xl lg:text-5xl'>
+                        Müşterilerimiz <span className='text-primary'>Ne Diyor</span>?
                     </h2>
-                    <p className='text-muted-foreground mx-auto max-w-2xl px-4 text-base sm:px-0 sm:text-lg'>
-                        BiMakas kullanıcılarının deneyimleri
+                    <p className='text-muted-foreground mx-auto max-w-3xl text-xl leading-relaxed'>
+                        Binlerce memnun müşterimizden gelen gerçek yorumlar. Siz de BiMakas deneyimini yaşayın.
                     </p>
                 </div>
 
-                <div className='grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3 md:gap-8'>
-                    {testimonials.map((testimonial, index) => (
-                        <Card key={index} className='border-0 shadow-sm'>
-                            <CardContent className='p-4 sm:p-6'>
-                                {/* Stars */}
-                                <div className='mb-3 flex items-center justify-center gap-1 sm:mb-4 md:justify-start'>
-                                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                                        <Star key={i} className='h-4 w-4 fill-yellow-400 text-yellow-400' />
-                                    ))}
+                {/* Testimonials Carousel */}
+                <div className='relative mx-auto max-w-7xl'>
+                    {/* Desktop View - 3 cards */}
+                    <div className='hidden gap-8 lg:grid lg:grid-cols-3'>
+                        {[0, 1, 2].map((offset) => {
+                            const index = (currentIndex + offset) % testimonials.length;
+                            const testimonial = testimonials[index];
+
+                            return (
+                                <Card
+                                    key={testimonial.id}
+                                    className='bg-background/60 border-border/50 hover:border-primary/30 group backdrop-blur-sm transition-all duration-300 hover:shadow-lg'>
+                                    <CardContent className='p-8'>
+                                        {/* Quote Icon */}
+                                        <div className='mb-6'>
+                                            <Quote className='text-primary/30 group-hover:text-primary/50 h-8 w-8 transition-colors' />
+                                        </div>
+
+                                        {/* Rating */}
+                                        <div className='mb-4 flex items-center space-x-1'>
+                                            {renderStars(testimonial.rating)}
+                                        </div>
+
+                                        {/* Testimonial Text */}
+                                        <p className='text-muted-foreground mb-6 leading-relaxed italic'>
+                                            "{testimonial.text}"
+                                        </p>
+
+                                        {/* User Info */}
+                                        <div className='flex items-center space-x-4'>
+                                            <Avatar className='border-primary/20 h-12 w-12 border-2'>
+                                                <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
+                                                <AvatarFallback className='bg-primary/10 text-primary font-semibold'>
+                                                    {testimonial.name
+                                                        .split(' ')
+                                                        .map((n) => n[0])
+                                                        .join('')}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <div className='text-foreground font-semibold'>{testimonial.name}</div>
+                                                <div className='text-muted-foreground text-sm'>{testimonial.role}</div>
+                                                <div className='text-primary text-xs'>
+                                                    {testimonial.service} • {testimonial.date}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
+                    </div>
+
+                    {/* Mobile View - 1 card */}
+                    <div className='lg:hidden'>
+                        <Card className='bg-background/60 border-border/50 hover:border-primary/30 backdrop-blur-sm transition-all duration-300 hover:shadow-lg'>
+                            <CardContent className='p-8'>
+                                {/* Quote Icon */}
+                                <div className='mb-6 text-center'>
+                                    <Quote className='text-primary/30 mx-auto h-8 w-8' />
                                 </div>
 
-                                {/* Testimonial */}
-                                <p className='text-muted-foreground mb-3 text-center text-sm leading-relaxed italic sm:mb-4 sm:text-base md:text-left'>
-                                    &quot;{testimonial.text}&quot;
+                                {/* Rating */}
+                                <div className='mb-4 flex items-center justify-center space-x-1'>
+                                    {renderStars(testimonials[currentIndex].rating)}
+                                </div>
+
+                                {/* Testimonial Text */}
+                                <p className='text-muted-foreground mb-6 text-center leading-relaxed italic'>
+                                    "{testimonials[currentIndex].text}"
                                 </p>
 
-                                {/* Author */}
-                                <div className='border-t pt-3 text-center sm:pt-4 md:text-left'>
-                                    <div className='text-foreground text-sm font-semibold sm:text-base'>
-                                        {testimonial.name}
-                                    </div>
-                                    <div className='text-muted-foreground text-xs sm:text-sm'>
-                                        {testimonial.location}
+                                {/* User Info */}
+                                <div className='flex items-center justify-center space-x-4'>
+                                    <Avatar className='border-primary/20 h-12 w-12 border-2'>
+                                        <AvatarImage
+                                            src={testimonials[currentIndex].avatar}
+                                            alt={testimonials[currentIndex].name}
+                                        />
+                                        <AvatarFallback className='bg-primary/10 text-primary font-semibold'>
+                                            {testimonials[currentIndex].name
+                                                .split(' ')
+                                                .map((n) => n[0])
+                                                .join('')}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className='text-center'>
+                                        <div className='text-foreground font-semibold'>
+                                            {testimonials[currentIndex].name}
+                                        </div>
+                                        <div className='text-muted-foreground text-sm'>
+                                            {testimonials[currentIndex].role}
+                                        </div>
+                                        <div className='text-primary text-xs'>
+                                            {testimonials[currentIndex].service} • {testimonials[currentIndex].date}
+                                        </div>
                                     </div>
                                 </div>
                             </CardContent>
                         </Card>
-                    ))}
+                    </div>
+
+                    {/* Navigation Controls */}
+                    <div className='mt-8 flex items-center justify-center space-x-4'>
+                        <Button
+                            variant='outline'
+                            size='icon'
+                            onClick={prevSlide}
+                            className='border-primary/30 hover:bg-primary/10 rounded-full'>
+                            <ChevronLeft className='h-4 w-4' />
+                        </Button>
+
+                        {/* Dots Indicator */}
+                        <div className='flex items-center space-x-2'>
+                            {testimonials.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentIndex(index)}
+                                    className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                                        index === currentIndex ? 'bg-primary w-6' : 'bg-primary/30'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+
+                        <Button
+                            variant='outline'
+                            size='icon'
+                            onClick={nextSlide}
+                            className='border-primary/30 hover:bg-primary/10 rounded-full'>
+                            <ChevronRight className='h-4 w-4' />
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Bottom Stats */}
+                <div className='mt-20 grid grid-cols-2 gap-8 text-center lg:grid-cols-4'>
+                    <div className='space-y-2'>
+                        <div className='text-primary text-3xl font-bold'>4.9★</div>
+                        <div className='text-muted-foreground text-sm'>Ortalama Puan</div>
+                    </div>
+                    <div className='space-y-2'>
+                        <div className='text-primary text-3xl font-bold'>2,500+</div>
+                        <div className='text-muted-foreground text-sm'>Mutlu Müşteri</div>
+                    </div>
+                    <div className='space-y-2'>
+                        <div className='text-primary text-3xl font-bold'>98%</div>
+                        <div className='text-muted-foreground text-sm'>Memnuniyet Oranı</div>
+                    </div>
+                    <div className='space-y-2'>
+                        <div className='text-primary text-3xl font-bold'>5,000+</div>
+                        <div className='text-muted-foreground text-sm'>Tamamlanan Hizmet</div>
+                    </div>
                 </div>
             </div>
         </section>
