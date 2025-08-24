@@ -1,0 +1,8 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+1. whenever you implement a component, implement it in a responsive way, for both desktop and mobile
+2.

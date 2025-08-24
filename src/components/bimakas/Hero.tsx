@@ -75,9 +75,10 @@ const Hero = () => {
                         {/* Features List */}
                         <div className='space-y-3'>
                             {[
-                                '⏱️ Anında randevu sistemi',
-                                '📍 Konumunuza en yakın profesyoneller',
-                                '💳 Güvenli ödeme altyapısı'
+                                '🔍 Keşfedin: Yakınınızdaki en iyi berberleri bulun',
+                                '📅 Rezervasyon: Uygun saatte anında randevu alın',
+                                '📍 Takip: Berberinizi canlı olarak takip edin',
+                                '⭐ Değerlendirin: Deneyiminizi paylaşın ve puan verin'
                             ].map((feature, index) => (
                                 <div
                                     key={index}
@@ -135,8 +136,8 @@ const Hero = () => {
                             <div className='bg-background border-border/50 relative rounded-[2.5rem] border p-2 shadow-2xl'>
                                 <div className='from-primary/5 to-primary/10 rounded-[2rem] bg-gradient-to-br p-1'>
                                     <Image
-                                        src='/images/screenshot1.png'
-                                        alt='BiMakas Mobil Uygulaması'
+                                        src='/images/screens/home-discovery.png'
+                                        alt='BiMakas Ana Sayfa - Berber Keşfi'
                                         width={300}
                                         height={600}
                                         className='h-auto w-full rounded-[1.8rem] shadow-inner'
@@ -146,7 +147,7 @@ const Hero = () => {
 
                                 {/* Notification Badge */}
                                 <div className='bg-primary text-primary-foreground absolute -top-2 right-8 animate-pulse rounded-full px-3 py-1 text-xs font-medium'>
-                                    Yeni Mesaj
+                                    Yakında!
                                 </div>
                             </div>
 
